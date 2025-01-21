@@ -1,6 +1,7 @@
 #include "malloc.h"
 #include <unistd.h>
 #include <stddef.h>
+#include <sys/mman.h>
 
 #define PAGE_SIZE 4096
 
