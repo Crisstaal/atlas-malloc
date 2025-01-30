@@ -27,10 +27,7 @@ void *_malloc(size_t size)
     }
 
     /** Calculate the total size to be allocated: header size + requested size **/
-    size_t total_size = size + sizeof(size_t);
-
-    /** Round up to the nearest multiple of the page size for alignment **/
-    total_size = (total_size + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
+    size_t total_size = size + sizeof(block_t);
 
     /** Try to find a suitable free block in the free list **/
     block_t *prev = NULL, *curr = free_list;
@@ -45,22 +42,16 @@ void *_malloc(size_t size)
             prev->next = curr->next;
         } else {
             free_list = curr->next;
+
+        return (void *)(curr + 1);
         }
-
-        /** Return the memory just after the header **/
-        return (void *)((char *)curr + sizeof(size_t));
     }
-
-    /** No suitable free block, allocate a new one using mmap **/
-    void *ptr = mmap(NULL, total_size, PROT_READ | PROT_WRITE,
-                     MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-    if (ptr == MAP_FAILED) {
+        /** No suitable free block, expand the heap **/
+    block_t *new_block = sbrk(total_size);
+    if (new_block == (void *)-1){
         return NULL;
-    }
 
-    /** Store the size in the header (first part of the allocated memory) **/
-    *(size_t *)ptr = size;
-
-    /** Return a pointer to the memory just after the header **/
-    return (void *)((char *)ptr + sizeof(size_t));
+    new_block->size = total_size;
+    return (void *)(new_block + 1);
+}
 }

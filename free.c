@@ -13,17 +13,9 @@ void _free(void *ptr)
     }
 
     /** Get the block header by subtracting the size of the header from the pointer **/
-    block_t *block = (block_t *)((char *)ptr - sizeof(size_t));
+    block_t *block = (block_t *)((char *)ptr - 1);
 
     /** Clear the block's next pointer and add it to the free list **/
     block->next = free_list;
     free_list = block;
-
-    /** If the block is large enough (page-sized or more), we can release it back to the system **/
-    size_t block_size = block->size + sizeof(size_t);
-
-    if (block_size >= PAGE_SIZE) {
-        /** If the block is large enough (page-sized or more), we release it back to the system **/
-        munmap((void *)block, block_size);
-    }
 }
