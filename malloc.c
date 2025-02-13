@@ -4,17 +4,6 @@
 
 #define PAGE_SIZE 4096
 
-/**
- * struct block - Block header structure for managing memory blocks
- * @size: Size of the allocated memory block
- * @next: Pointer to the next block in the free list
- */
-typedef struct block
-{
-	size_t size;
-	struct block *next;
-} block_t;
-
 /** Static free list to manage available memory **/
 static block_t *free_list = NULL;
 
