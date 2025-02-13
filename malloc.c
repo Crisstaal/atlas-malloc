@@ -4,7 +4,7 @@
 
 
 /** Static free list to manage available memory **/
-static block_t *free_list = NULL;
+block_t *free_list = NULL;
 
 /**
 * align_size - Aligns an unsigned value to the ceiling multiple of 8
