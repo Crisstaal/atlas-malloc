@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 #define PAGE_SIZE 4096
+
 /**
  * struct block - Block header structure for managing memory blocks
  * @size: Size of the allocated memory block
@@ -14,7 +15,6 @@ typedef struct block {
     struct block *next;
 } block_t;
 
-extern block_t *free_list;
 void *naive_malloc(size_t size);
 void *_malloc(size_t size);
 void _free(void *ptr);

@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include <stddef.h>
 
-#define PAGE_SIZE 4096
 
 /** Static free list to manage available memory **/
 static block_t *free_list = NULL;
