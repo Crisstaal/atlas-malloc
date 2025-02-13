@@ -19,11 +19,11 @@ typedef struct block
 static block_t *free_list = NULL;
 
 /**
- * align_size - Aligns an unsigned value to the ceiling multiple of 8
- * @size: The size to align
- *
- * Return: The aligned size
- */
+* align_size - Aligns an unsigned value to the ceiling multiple of 8
+* @size: The size to align
+*
+* Return: The aligned size
+*/
 size_t align_size(size_t size)
 {
 	size += 7;
